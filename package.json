@@ -2,7 +2,7 @@
   "name": "validator",
   "version": "1.0.0",
   "description": "A JS based validator that accepts an object as argument and returns an object",
-  "main": "index.js",
+  "main": "validator.js",
   "directories": {
     "test": "test"
   },
