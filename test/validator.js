@@ -35,6 +35,11 @@ describe('Validator', function(){
             'minimum': 3,
             'maximum': 10
           }
+        },
+        {
+          'email': {
+            'email': true
+          }
         }
       ];
     });
@@ -77,6 +82,18 @@ describe('Validator', function(){
       })).to.eql([
         {
           login: ['Must be present', 'Must be greater or equal to 3']
+        }
+      ])
+    });
+
+    it('validates email format of single attribute', function(){
+      let validator = new Validator(validations);
+
+      expect(validator.run({
+        'email': 'aaaa'
+      })).to.eql([
+        {
+          email: ['Is not a valid email']
         }
       ])
     });

@@ -20,16 +20,18 @@ class Validator {
     this._objectCheck(fieldsForValidation)
     for(let key in this.validations){
       let field = Object.keys(this.validations[key])[0]
-      let value = fieldsForValidation[field];
-      let errorMessages = [];
-      for(let validation in this.validations[key][field]){
-        let arg = this.validations[key][field][validation];
-        let result = this['_'+validation](value, arg);
-        if(result != null){
-          errorMessages.push(result);
+      if(fieldsForValidation[field] != null){
+        let value = fieldsForValidation[field];
+        let errorMessages = [];
+        for(let validation in this.validations[key][field]){
+          let arg = this.validations[key][field][validation];
+          let result = this['_'+validation](value, arg);
+          if(result != null){
+            errorMessages.push(result);
+          }
         }
+        this.validationErrors.push({[field]: errorMessages});
       }
-      this.validationErrors.push({[field]: errorMessages});
     }
 
     return this.validationErrors;
@@ -60,6 +62,11 @@ class Validator {
   }
 
   _email(value, arg){
+    if(/\S+@\S+\.\S+/.test(arg)){
+      return null
+    } else {
+      return `Is not a valid email`
+    }
   }
 
   _arrayCheck(obj){
