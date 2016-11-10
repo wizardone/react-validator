@@ -6,13 +6,13 @@ class Validator {
   }
   /*
    const validations = [
-   {
-   'login': {
-   'present': true,
-   'minimum': 3,
-   'maximum': 10
-   }
-   }
+     {
+       'login': {
+         'present': true,
+         'minimum': 3,
+         'maximum': 10
+       }
+     }
    ]
    */
 

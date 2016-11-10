@@ -50,53 +50,86 @@ describe('Validator', function(){
       }).to.throw(ValidatorException)
     });
 
-    it('validates maximum length of single attribute', function(){
-      let validator = new Validator(validations);
+    context('single attribute', function() {
+      it('validates maximum length of single attribute', function(){
+        let validator = new Validator(validations);
 
-      expect(validator.run({
-        'login': 'my long login'
-      })).to.eql([
-        {
-          login: ['Must be less than 10']
-        }
-      ])
-    });
+        expect(validator.run({
+          'login': 'my long login'
+        })).to.eql([
+          {
+            login: ['Must be less than 10']
+          }
+        ])
+      });
 
-    it('validates minimum length of single attribute', function(){
-      let validator = new Validator(validations);
+      it('validates minimum length of single attribute', function(){
+        let validator = new Validator(validations);
 
-      expect(validator.run({
-        'login': 'wa'
-      })).to.eql([
-        {
-          login: ['Must be greater or equal to 3']
-        }
-      ])
-    });
+        expect(validator.run({
+          'login': 'wa'
+        })).to.eql([
+          {
+            login: ['Must be greater or equal to 3']
+          }
+        ])
+      });
 
-    it('validates presence of single attribute', function(){
-      let validator = new Validator(validations);
+      it('validates presence of single attribute', function(){
+        let validator = new Validator(validations);
 
-      expect(validator.run({
-        'login': ''
-      })).to.eql([
-        {
-          login: ['Must be present', 'Must be greater or equal to 3']
-        }
-      ])
-    });
+        expect(validator.run({
+          'login': ''
+        })).to.eql([
+          {
+            login: ['Must be present', 'Must be greater or equal to 3']
+          }
+        ])
+      });
 
-    it('validates email format of single attribute', function(){
-      let validator = new Validator(validations);
+      it('validates email format of single attribute', function(){
+        let validator = new Validator(validations);
 
-      expect(validator.run({
-        'email': 'aaaa'
-      })).to.eql([
-        {
-          email: ['Is not a valid email']
-        }
-      ])
-    });
+        expect(validator.run({
+          'email': 'aaaa'
+        })).to.eql([
+          {
+            email: ['Is not a valid email']
+          }
+        ])
+      });
+    })
+
+    context('multiple attributes', function() {
+      it('validates multiple attributes at the same time', function(){
+        let validations = [
+          {
+            'login': {
+              'present': true,
+              'minimum': 3,
+              'maximum': 10
+            }
+          },
+          {
+            'email': {
+              'email': true
+            }
+          }
+        ];
+        let validator = new Validator(validations);
+
+        expect(validator.run({
+          'login': 'ku', 'email': 'aaa'
+        })).to.eql([
+          {
+            'login': ['Must be greater or equal to 3']
+          },
+          {
+            'email': ['Is not a valid email']
+          }
+        ])
+      })
+    })
 
   });
 })
