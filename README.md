@@ -1,4 +1,5 @@
 # react-validator
+[![Build Status](https://travis-ci.org/wizardone/react-validator.svg?branch=master)](https://travis-ci.org/wizardone/react-validator)
 
 The idea about a simple form validator in React came while working on some other React components (mainly the React-ready) components.
 The idea is simple: you pass a simple object to the validator and receive a simple object in return, listing the errors messages. It works well with React, especially when you save values in the state, which allows you to easily interact and validate data, before you send it to the server (just remember to always validate on the server as well :D)
